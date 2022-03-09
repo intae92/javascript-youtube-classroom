@@ -23,7 +23,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "KEY": () => (/* binding */ KEY),
 /* harmony export */   "OPTIONS": () => (/* binding */ OPTIONS),
-/* harmony export */   "URL": () => (/* binding */ URL),
 /* harmony export */   "fetchData": () => (/* binding */ fetchData)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
@@ -35,7 +34,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var URL = 'https://622752939a5410d43ba3fbcd--modest-euler-778376.netlify.app/dummy/youtube/v3/search?';
 var OPTIONS = {
   part: 'snippet',
   maxResults: _constants__WEBPACK_IMPORTED_MODULE_3__.RULES.MAX_VIDEOS,
@@ -305,7 +303,7 @@ var SearchModal = /*#__PURE__*/function () {
 
       if (isNextScroll) {
         this.renderVideoList({
-          url: _api__WEBPACK_IMPORTED_MODULE_6__.URL,
+          url: "https://622752939a5410d43ba3fbcd--modest-euler-778376.netlify.app/dummy/youtube/v3/search?",
           keyword: this.searchInputKeyword.value,
           options: _api__WEBPACK_IMPORTED_MODULE_6__.OPTIONS,
           pageToken: this.pageToken
@@ -327,7 +325,7 @@ var SearchModal = /*#__PURE__*/function () {
                 try {
                   validateKeyword(this.searchInputKeyword.value);
                   this.renderVideoList({
-                    url: _api__WEBPACK_IMPORTED_MODULE_6__.URL,
+                    url: "https://622752939a5410d43ba3fbcd--modest-euler-778376.netlify.app/dummy/youtube/v3/search?",
                     keyword: this.searchInputKeyword.value,
                     options: _api__WEBPACK_IMPORTED_MODULE_6__.OPTIONS,
                     pageToken: this.pageToken
