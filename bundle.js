@@ -97,6 +97,170 @@ var fetchData = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./src/js/common/VideoCard.js":
+/*!************************************!*\
+  !*** ./src/js/common/VideoCard.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ VideoCard)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+
+
+
+var VideoCard = /*#__PURE__*/function () {
+  function VideoCard(parentElement, props) {
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, VideoCard);
+
+    this.parentElement = parentElement;
+    this.props = props;
+  }
+
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(VideoCard, [{
+    key: "template",
+    value: function template() {
+      var _this$props = this.props,
+          item = _this$props.item,
+          videoIds = _this$props.videoIds;
+      var videoId = item.id.videoId,
+          _item$snippet = item.snippet,
+          url = _item$snippet.thumbnails.medium.url,
+          publishTime = _item$snippet.publishTime,
+          channelTitle = _item$snippet.channelTitle,
+          title = _item$snippet.title;
+      var storeButton = videoIds.includes(videoId) ? '' : '<button class="video-item__save-button button">⬇ 저장</button>';
+      var timeFormatter = publishTime.split('T')[0];
+      return "\n      <li class=\"video-item\" data-video-id=\"".concat(videoId, "\">\n        <img\n          src=\"").concat(url, "\"\n          alt=\"video-item-thumbnail\" class=\"video-item__thumbnail\">\n        <h4 class=\"video-item__title\">").concat(title, "</h4>\n        <p class=\"video-item__channel-name\">").concat(channelTitle, "</p>\n        <p class=\"video-item__published-date\">").concat(timeFormatter, "</p>\n        ").concat(storeButton, "\n      </li>\n      ");
+    }
+  }]);
+
+  return VideoCard;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/js/common/VideosCardContainer.js":
+/*!**********************************************!*\
+  !*** ./src/js/common/VideosCardContainer.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ VideoCardContainer)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/classPrivateFieldGet */ "./node_modules/@babel/runtime/helpers/esm/classPrivateFieldGet.js");
+/* harmony import */ var _babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/classPrivateFieldSet */ "./node_modules/@babel/runtime/helpers/esm/classPrivateFieldSet.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../api */ "./src/js/api.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../constants */ "./src/js/constants.js");
+/* harmony import */ var _utils_localStorage__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/localStorage */ "./src/js/utils/localStorage.js");
+/* harmony import */ var _VideoCard__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./VideoCard */ "./src/js/common/VideoCard.js");
+
+
+
+
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
+
+function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+
+
+
+
+
+
+var _state = /*#__PURE__*/new WeakMap();
+
+var VideoCardContainer = /*#__PURE__*/function () {
+  function VideoCardContainer(parentElement, props) {
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, VideoCardContainer);
+
+    _classPrivateFieldInitSpec(this, _state, {
+      writable: true,
+      value: void 0
+    });
+
+    this.parentElement = parentElement;
+
+    (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _state, props);
+
+    this.bindEvents();
+  }
+
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(VideoCardContainer, [{
+    key: "bindEvents",
+    value: function bindEvents() {
+      this.parentElement.addEventListener('click', this.storeIDHandler.bind(this));
+    }
+  }, {
+    key: "storeIDHandler",
+    value: function storeIDHandler(e) {
+      if (e.target.className.includes('video-item__save-button')) {
+        var videoID = e.target.closest('li').dataset.videoId;
+        var videoIDs = (0,_utils_localStorage__WEBPACK_IMPORTED_MODULE_7__.getStorageVideoIDs)(_api__WEBPACK_IMPORTED_MODULE_5__.KEY);
+
+        if (videoIDs.length >= _constants__WEBPACK_IMPORTED_MODULE_6__.RULES.MAX_STORED_IDS_AMOUNT) {
+          return;
+        }
+
+        (0,_utils_localStorage__WEBPACK_IMPORTED_MODULE_7__.setStorageVideoIDs)({
+          key: _api__WEBPACK_IMPORTED_MODULE_5__.KEY,
+          value: videoIDs.concat(videoID)
+        });
+        e.target.remove();
+      }
+    }
+  }, {
+    key: "template",
+    value: function template() {
+      var _classPrivateFieldGet2,
+          _this = this;
+
+      var videoIds = (0,_utils_localStorage__WEBPACK_IMPORTED_MODULE_7__.getStorageVideoIDs)(_api__WEBPACK_IMPORTED_MODULE_5__.KEY);
+      return (_classPrivateFieldGet2 = (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _state).items) === null || _classPrivateFieldGet2 === void 0 ? void 0 : _classPrivateFieldGet2.map(function (item) {
+        return new _VideoCard__WEBPACK_IMPORTED_MODULE_8__["default"](_this.parentElement, {
+          item: item,
+          videoIds: videoIds
+        }).template();
+      }).join('');
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      this.parentElement.insertAdjacentHTML('beforeend', this.template());
+    }
+  }, {
+    key: "setState",
+    value: function setState(newState) {
+      (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _state, _objectSpread(_objectSpread({}, (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _state)), newState));
+
+      this.render();
+    }
+  }]);
+
+  return VideoCardContainer;
+}();
+
+
+
+/***/ }),
+
 /***/ "./src/js/constants.js":
 /*!*****************************!*\
   !*** ./src/js/constants.js ***!
@@ -106,14 +270,14 @@ var fetchData = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "RELOAD_HEIGHT": () => (/* binding */ RELOAD_HEIGHT),
-/* harmony export */   "RULES": () => (/* binding */ RULES)
+/* harmony export */   "RULES": () => (/* binding */ RULES),
+/* harmony export */   "THROTTLE_PENDING_MILLISECOND": () => (/* binding */ THROTTLE_PENDING_MILLISECOND)
 /* harmony export */ });
 var RULES = {
   MAX_VIDEOS: 10,
   MAX_STORED_IDS_AMOUNT: 100
 };
-var RELOAD_HEIGHT = 60;
+var THROTTLE_PENDING_MILLISECOND = 500;
 
 
 /***/ }),
@@ -188,7 +352,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../api */ "./src/js/api.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../constants */ "./src/js/constants.js");
-/* harmony import */ var _utils_localStorage__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/localStorage */ "./src/js/utils/localStorage.js");
+/* harmony import */ var _common_VideosCardContainer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../common/VideosCardContainer */ "./src/js/common/VideosCardContainer.js");
 
 
 
@@ -218,21 +382,6 @@ var hasVideoList = function hasVideoList(videoList) {
   return videoList.length !== 0;
 };
 
-var template = function template(json) {
-  var videoIds = (0,_utils_localStorage__WEBPACK_IMPORTED_MODULE_8__.getStorageVideoIDs)(_api__WEBPACK_IMPORTED_MODULE_6__.KEY);
-  return json.items.map(function (item) {
-    var videoId = item.id.videoId,
-        _item$snippet = item.snippet,
-        url = _item$snippet.thumbnails.medium.url,
-        publishTime = _item$snippet.publishTime,
-        channelTitle = _item$snippet.channelTitle,
-        title = _item$snippet.title;
-    var storeButton = videoIds.includes(videoId) ? '' : '<button class="video-item__save-button button">⬇ 저장</button>';
-    var timeFormatter = publishTime.split('T')[0];
-    return "\n        <li class=\"video-item\" data-video-id=\"".concat(videoId, "\">\n          <img\n            src=\"").concat(url, "\"\n            alt=\"video-item-thumbnail\" class=\"video-item__thumbnail\">\n          <h4 class=\"video-item__title\">").concat(title, "</h4>\n          <p class=\"video-item__channel-name\">").concat(channelTitle, "</p>\n          <p class=\"video-item__published-date\">").concat(timeFormatter, "</p>\n          ").concat(storeButton, "\n        </li>\n          ");
-  }).join('');
-};
-
 var SKELETON_TEMPLATE = "\n  <div class=\"skeleton\">\n    <div class=\"image\"></div>\n    <p class=\"line\"></p>\n    <p class=\"line\"></p>\n  </div>\n";
 
 var SearchModal = /*#__PURE__*/function () {
@@ -242,6 +391,9 @@ var SearchModal = /*#__PURE__*/function () {
     this.element = element;
     this.configureDOMs();
     this.bindEvents();
+    this.VideoCardContainer = new _common_VideosCardContainer__WEBPACK_IMPORTED_MODULE_8__["default"](this.videoList, {
+      items: []
+    });
     this.pageToken = '';
   }
 
@@ -264,7 +416,6 @@ var SearchModal = /*#__PURE__*/function () {
   }, {
     key: "bindEvents",
     value: function bindEvents() {
-      this.element.addEventListener('click', this.storeIDHandler.bind(this));
       this.dimmer.addEventListener('click', this.closeModalHandler.bind(this));
       this.searchForm.addEventListener('submit', this.searchHandler.bind(this));
       this.videoList.addEventListener('scroll', this.scrollHandler.bind(this));
@@ -275,39 +426,30 @@ var SearchModal = /*#__PURE__*/function () {
       this.element.classList.add('hide');
     }
   }, {
-    key: "storeIDHandler",
-    value: function storeIDHandler(e) {
-      if (e.target.className.includes('video-item__save-button')) {
-        var videoID = e.target.closest('li').dataset.videoId;
-        var videoIDs = (0,_utils_localStorage__WEBPACK_IMPORTED_MODULE_8__.getStorageVideoIDs)(_api__WEBPACK_IMPORTED_MODULE_6__.KEY);
-
-        if (videoIDs.length >= _constants__WEBPACK_IMPORTED_MODULE_7__.RULES.MAX_STORED_IDS_AMOUNT) {
-          return;
-        }
-
-        (0,_utils_localStorage__WEBPACK_IMPORTED_MODULE_8__.setStorageVideoIDs)({
-          key: _api__WEBPACK_IMPORTED_MODULE_6__.KEY,
-          value: videoIDs.concat(videoID)
-        });
-        e.target.remove();
-      }
-    }
-  }, {
     key: "scrollHandler",
     value: function scrollHandler(e) {
-      var _e$target = e.target,
-          scrollTop = _e$target.scrollTop,
-          offsetHeight = _e$target.offsetHeight,
-          scrollHeight = _e$target.scrollHeight;
-      var isNextScroll = scrollTop + offsetHeight >= scrollHeight - _constants__WEBPACK_IMPORTED_MODULE_7__.RELOAD_HEIGHT;
+      var _this = this;
 
-      if (isNextScroll) {
-        this.renderVideoList({
-          url: "https://622752939a5410d43ba3fbcd--modest-euler-778376.netlify.app/youtube/v3/search?",
-          keyword: this.searchInputKeyword.value,
-          options: _api__WEBPACK_IMPORTED_MODULE_6__.OPTIONS,
-          pageToken: this.pageToken
-        });
+      var throttle;
+
+      if (!throttle) {
+        var _e$target = e.target,
+            scrollTop = _e$target.scrollTop,
+            offsetHeight = _e$target.offsetHeight,
+            scrollHeight = _e$target.scrollHeight;
+        var isNextScroll = scrollTop + offsetHeight >= scrollHeight;
+        throttle = setTimeout(function () {
+          throttle = null;
+
+          if (isNextScroll) {
+            _this.renderVideoList({
+              url: "https://622752939a5410d43ba3fbcd--modest-euler-778376.netlify.app/dummy/youtube/v3/search?",
+              keyword: _this.searchInputKeyword.value,
+              options: _api__WEBPACK_IMPORTED_MODULE_6__.OPTIONS,
+              pageToken: _this.pageToken
+            });
+          }
+        }, _constants__WEBPACK_IMPORTED_MODULE_7__.THROTTLE_PENDING_MILLISECOND);
       }
     }
   }, {
@@ -319,13 +461,16 @@ var SearchModal = /*#__PURE__*/function () {
             switch (_context.prev = _context.next) {
               case 0:
                 e.preventDefault();
-                this.videoList.replaceChildren();
-                this.pageToken = '';
+                this.videoList.scrollTo({
+                  top: 0
+                });
 
                 try {
                   validateKeyword(this.searchInputKeyword.value);
+                  this.videoList.replaceChildren();
+                  this.pageToken = '';
                   this.renderVideoList({
-                    url: "https://622752939a5410d43ba3fbcd--modest-euler-778376.netlify.app/youtube/v3/search?",
+                    url: "https://622752939a5410d43ba3fbcd--modest-euler-778376.netlify.app/dummy/youtube/v3/search?",
                     keyword: this.searchInputKeyword.value,
                     options: _api__WEBPACK_IMPORTED_MODULE_6__.OPTIONS,
                     pageToken: this.pageToken
@@ -335,7 +480,7 @@ var SearchModal = /*#__PURE__*/function () {
                   this.searchErrorMessage.textContent = '검색어를 입력해 주세요.';
                 }
 
-              case 4:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -386,7 +531,7 @@ var SearchModal = /*#__PURE__*/function () {
   }, {
     key: "renderVideoList",
     value: function () {
-      var _renderVideoList = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default().mark(function _callee2(props) {
+      var _renderVideoList = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default().mark(function _callee2(options) {
         var videoList;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default().wrap(function _callee2$(_context2) {
           while (1) {
@@ -394,14 +539,16 @@ var SearchModal = /*#__PURE__*/function () {
               case 0:
                 this.renderSkeletonUI(this.videoList);
                 _context2.next = 3;
-                return (0,_api__WEBPACK_IMPORTED_MODULE_6__.fetchData)(_objectSpread({}, props));
+                return (0,_api__WEBPACK_IMPORTED_MODULE_6__.fetchData)(_objectSpread({}, options));
 
               case 3:
                 videoList = _context2.sent;
+                this.VideoCardContainer.setState({
+                  items: videoList.items
+                });
                 this.showSearchResult(videoList.items);
                 this.removeSkeletonUI(this.videoList);
                 this.pageToken = videoList.nextPageToken || '';
-                this.videoList.insertAdjacentHTML('beforeend', template(videoList));
 
               case 8:
               case "end":
@@ -535,7 +682,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".modal-container {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 100vw;\n  height: 100vh;\n  position: fixed;\n  top: 0;\n  left: 0;\n}\n\n.modal-container.hide {\n  display: none;\n}\n\n.dimmer {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  background: rgba(0, 0, 0, 0.5);\n}\n\n.search-modal {\n  position: relative;\n  width: 1080px;\n  height: 727px;\n  background: #ffffff;\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 4px;\n  padding: 50px 30px 32px 30px;\n}\n\n.search-modal__title {\n  font-weight: bold;\n  font-size: 34px;\n  line-height: 36px;\n  text-align: center;\n  margin-bottom: 40px;\n}\n\n.search-input {\n  display: flex;\n  flex-direction: column;\n  width: fit-content;\n  margin: 0 auto;\n  margin-bottom: 40px;\n}\n\n#search-error-message {\n  color: rgb(160, 158, 158);\n  margin-top: 3px;\n  margin-left: 3px;\n  min-height: 12px;\n}\n\n.search-input__keyword {\n  width: 400px;\n  height: 36px;\n  margin-right: 20px;\n  padding: 4px 8px;\n  border: 1px solid #b4b4b4;\n  border-radius: 4px;\n}\n\n.search-input__keyword::placeholder {\n  color: #8b8b8b;\n  font-size: 16px;\n}\n\n.search-input__search-button {\n  width: 72px;\n  height: 36px;\n  background: #00bcd4;\n  color: #ffffff;\n}\n\n.search-result.search-result--no-result {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n\n.search-result.hidden {\n  display: none;\n}\n\n.no-result__image {\n  width: 190px;\n  height: 140px;\n  margin-bottom: 32px;\n}\n\n.no-result__description {\n  font-size: 16px;\n  line-height: 150%;\n  text-align: center;\n  letter-spacing: 0.5px;\n}\n\n.video-list {\n  width: 1040px;\n  height: 493px;\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  gap: 32px 16px;\n  overflow-y: auto;\n}\n\n.video-list::-webkit-scrollbar {\n  width: 7px;\n}\n.video-list::-webkit-scrollbar-thumb {\n  border-radius: 10px;\n  background-color: #00bcd4;\n}\n.video-list::-webkit-scrollbar-track {\n  background-color: transparent;\n}\n\n.video-item {\n  position: relative;\n  width: 240px;\n  height: 255px;\n}\n\n.video-item__thumbnail {\n  width: 100%;\n  height: 135px;\n}\n\n.video-item__title {\n  font-weight: bold;\n  font-size: 16px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  margin: 4px 0;\n}\n\n.video-item__channel-name {\n  font-size: 16px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n\n.video-item__published-date {\n  font-size: 12px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n}\n\n.video-item__save-button {\n  position: absolute;\n  right: 0;\n  width: 80px;\n  height: 36px;\n  background: #f9f9f9;\n  margin-top: 4px;\n}\n\n.video-item__save-button:hover {\n  background: #efefef;\n}\n", "",{"version":3,"sources":["webpack://./src/css/modal.css"],"names":[],"mappings":"AAAA;EACE,aAAa;EACb,mBAAmB;EACnB,uBAAuB;EACvB,YAAY;EACZ,aAAa;EACb,eAAe;EACf,MAAM;EACN,OAAO;AACT;;AAEA;EACE,aAAa;AACf;;AAEA;EACE,kBAAkB;EAClB,WAAW;EACX,YAAY;EACZ,8BAA8B;AAChC;;AAEA;EACE,kBAAkB;EAClB,aAAa;EACb,aAAa;EACb,mBAAmB;EACnB,qCAAqC;EACrC,kBAAkB;EAClB,4BAA4B;AAC9B;;AAEA;EACE,iBAAiB;EACjB,eAAe;EACf,iBAAiB;EACjB,kBAAkB;EAClB,mBAAmB;AACrB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,kBAAkB;EAClB,cAAc;EACd,mBAAmB;AACrB;;AAEA;EACE,yBAAyB;EACzB,eAAe;EACf,gBAAgB;EAChB,gBAAgB;AAClB;;AAEA;EACE,YAAY;EACZ,YAAY;EACZ,kBAAkB;EAClB,gBAAgB;EAChB,yBAAyB;EACzB,kBAAkB;AACpB;;AAEA;EACE,cAAc;EACd,eAAe;AACjB;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,mBAAmB;EACnB,cAAc;AAChB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,uBAAuB;EACvB,mBAAmB;AACrB;;AAEA;EACE,aAAa;AACf;;AAEA;EACE,YAAY;EACZ,aAAa;EACb,mBAAmB;AACrB;;AAEA;EACE,eAAe;EACf,iBAAiB;EACjB,kBAAkB;EAClB,qBAAqB;AACvB;;AAEA;EACE,aAAa;EACb,aAAa;EACb,aAAa;EACb,mBAAmB;EACnB,eAAe;EACf,cAAc;EACd,gBAAgB;AAClB;;AAEA;EACE,UAAU;AACZ;AACA;EACE,mBAAmB;EACnB,yBAAyB;AAC3B;AACA;EACE,6BAA6B;AAC/B;;AAEA;EACE,kBAAkB;EAClB,YAAY;EACZ,aAAa;AACf;;AAEA;EACE,WAAW;EACX,aAAa;AACf;;AAEA;EACE,iBAAiB;EACjB,eAAe;EACf,iBAAiB;EACjB,qBAAqB;EACrB,mBAAmB;EACnB,gBAAgB;EAChB,uBAAuB;EACvB,aAAa;AACf;;AAEA;EACE,eAAe;EACf,iBAAiB;EACjB,qBAAqB;EACrB,mBAAmB;EACnB,gBAAgB;EAChB,uBAAuB;AACzB;;AAEA;EACE,eAAe;EACf,iBAAiB;EACjB,qBAAqB;AACvB;;AAEA;EACE,kBAAkB;EAClB,QAAQ;EACR,WAAW;EACX,YAAY;EACZ,mBAAmB;EACnB,eAAe;AACjB;;AAEA;EACE,mBAAmB;AACrB","sourcesContent":[".modal-container {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 100vw;\n  height: 100vh;\n  position: fixed;\n  top: 0;\n  left: 0;\n}\n\n.modal-container.hide {\n  display: none;\n}\n\n.dimmer {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  background: rgba(0, 0, 0, 0.5);\n}\n\n.search-modal {\n  position: relative;\n  width: 1080px;\n  height: 727px;\n  background: #ffffff;\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 4px;\n  padding: 50px 30px 32px 30px;\n}\n\n.search-modal__title {\n  font-weight: bold;\n  font-size: 34px;\n  line-height: 36px;\n  text-align: center;\n  margin-bottom: 40px;\n}\n\n.search-input {\n  display: flex;\n  flex-direction: column;\n  width: fit-content;\n  margin: 0 auto;\n  margin-bottom: 40px;\n}\n\n#search-error-message {\n  color: rgb(160, 158, 158);\n  margin-top: 3px;\n  margin-left: 3px;\n  min-height: 12px;\n}\n\n.search-input__keyword {\n  width: 400px;\n  height: 36px;\n  margin-right: 20px;\n  padding: 4px 8px;\n  border: 1px solid #b4b4b4;\n  border-radius: 4px;\n}\n\n.search-input__keyword::placeholder {\n  color: #8b8b8b;\n  font-size: 16px;\n}\n\n.search-input__search-button {\n  width: 72px;\n  height: 36px;\n  background: #00bcd4;\n  color: #ffffff;\n}\n\n.search-result.search-result--no-result {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n\n.search-result.hidden {\n  display: none;\n}\n\n.no-result__image {\n  width: 190px;\n  height: 140px;\n  margin-bottom: 32px;\n}\n\n.no-result__description {\n  font-size: 16px;\n  line-height: 150%;\n  text-align: center;\n  letter-spacing: 0.5px;\n}\n\n.video-list {\n  width: 1040px;\n  height: 493px;\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  gap: 32px 16px;\n  overflow-y: auto;\n}\n\n.video-list::-webkit-scrollbar {\n  width: 7px;\n}\n.video-list::-webkit-scrollbar-thumb {\n  border-radius: 10px;\n  background-color: #00bcd4;\n}\n.video-list::-webkit-scrollbar-track {\n  background-color: transparent;\n}\n\n.video-item {\n  position: relative;\n  width: 240px;\n  height: 255px;\n}\n\n.video-item__thumbnail {\n  width: 100%;\n  height: 135px;\n}\n\n.video-item__title {\n  font-weight: bold;\n  font-size: 16px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  margin: 4px 0;\n}\n\n.video-item__channel-name {\n  font-size: 16px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n\n.video-item__published-date {\n  font-size: 12px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n}\n\n.video-item__save-button {\n  position: absolute;\n  right: 0;\n  width: 80px;\n  height: 36px;\n  background: #f9f9f9;\n  margin-top: 4px;\n}\n\n.video-item__save-button:hover {\n  background: #efefef;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".modal-container {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 100vw;\n  height: 100vh;\n  position: fixed;\n  top: 0;\n  left: 0;\n}\n\n.modal-container.hide {\n  display: none;\n}\n\n.dimmer {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  background: rgba(0, 0, 0, 0.5);\n}\n\n.search-modal {\n  position: relative;\n  width: 1080px;\n  height: 727px;\n  background: #ffffff;\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 4px;\n  padding: 50px 30px 32px 30px;\n}\n\n.search-modal__title {\n  font-weight: bold;\n  font-size: 34px;\n  line-height: 36px;\n  text-align: center;\n  margin-bottom: 40px;\n}\n\n.search-input {\n  display: flex;\n  flex-direction: column;\n  width: fit-content;\n  margin: 0 auto;\n  margin-bottom: 45px;\n}\n\n#search-error-message {\n  color: rgb(160, 158, 158);\n  margin-top: 3px;\n  margin-left: 3px;\n  min-height: 22px;\n}\n\n.search-input__keyword {\n  width: 400px;\n  height: 36px;\n  margin-right: 20px;\n  padding: 4px 8px;\n  border: 1px solid #b4b4b4;\n  border-radius: 4px;\n}\n\n.search-input__keyword::placeholder {\n  color: #8b8b8b;\n  font-size: 16px;\n}\n\n.search-input__search-button {\n  width: 72px;\n  height: 36px;\n  background: #00bcd4;\n  color: #ffffff;\n}\n\n.search-result.search-result--no-result {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n\n.search-result.hidden {\n  display: none;\n}\n\n.no-result__image {\n  width: 190px;\n  height: 140px;\n  margin-bottom: 32px;\n}\n\n.no-result__description {\n  font-size: 16px;\n  line-height: 150%;\n  text-align: center;\n  letter-spacing: 0.5px;\n}\n\n.video-list {\n  width: 1040px;\n  height: 493px;\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  gap: 32px 16px;\n  overflow-y: auto;\n}\n\n.video-list::-webkit-scrollbar {\n  width: 7px;\n}\n.video-list::-webkit-scrollbar-thumb {\n  border-radius: 10px;\n  background-color: #00bcd4;\n}\n.video-list::-webkit-scrollbar-track {\n  background-color: transparent;\n}\n\n.video-item {\n  position: relative;\n  width: 240px;\n  height: 255px;\n}\n\n.video-item__thumbnail {\n  width: 100%;\n  height: 135px;\n}\n\n.video-item__title {\n  font-weight: bold;\n  font-size: 16px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  margin: 4px 0;\n}\n\n.video-item__channel-name {\n  font-size: 16px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n\n.video-item__published-date {\n  font-size: 12px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n}\n\n.video-item__save-button {\n  position: absolute;\n  right: 0;\n  width: 80px;\n  height: 36px;\n  background: #f9f9f9;\n  margin-top: 4px;\n}\n\n.video-item__save-button:hover {\n  background: #efefef;\n}\n", "",{"version":3,"sources":["webpack://./src/css/modal.css"],"names":[],"mappings":"AAAA;EACE,aAAa;EACb,mBAAmB;EACnB,uBAAuB;EACvB,YAAY;EACZ,aAAa;EACb,eAAe;EACf,MAAM;EACN,OAAO;AACT;;AAEA;EACE,aAAa;AACf;;AAEA;EACE,kBAAkB;EAClB,WAAW;EACX,YAAY;EACZ,8BAA8B;AAChC;;AAEA;EACE,kBAAkB;EAClB,aAAa;EACb,aAAa;EACb,mBAAmB;EACnB,qCAAqC;EACrC,kBAAkB;EAClB,4BAA4B;AAC9B;;AAEA;EACE,iBAAiB;EACjB,eAAe;EACf,iBAAiB;EACjB,kBAAkB;EAClB,mBAAmB;AACrB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,kBAAkB;EAClB,cAAc;EACd,mBAAmB;AACrB;;AAEA;EACE,yBAAyB;EACzB,eAAe;EACf,gBAAgB;EAChB,gBAAgB;AAClB;;AAEA;EACE,YAAY;EACZ,YAAY;EACZ,kBAAkB;EAClB,gBAAgB;EAChB,yBAAyB;EACzB,kBAAkB;AACpB;;AAEA;EACE,cAAc;EACd,eAAe;AACjB;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,mBAAmB;EACnB,cAAc;AAChB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,uBAAuB;EACvB,mBAAmB;AACrB;;AAEA;EACE,aAAa;AACf;;AAEA;EACE,YAAY;EACZ,aAAa;EACb,mBAAmB;AACrB;;AAEA;EACE,eAAe;EACf,iBAAiB;EACjB,kBAAkB;EAClB,qBAAqB;AACvB;;AAEA;EACE,aAAa;EACb,aAAa;EACb,aAAa;EACb,mBAAmB;EACnB,eAAe;EACf,cAAc;EACd,gBAAgB;AAClB;;AAEA;EACE,UAAU;AACZ;AACA;EACE,mBAAmB;EACnB,yBAAyB;AAC3B;AACA;EACE,6BAA6B;AAC/B;;AAEA;EACE,kBAAkB;EAClB,YAAY;EACZ,aAAa;AACf;;AAEA;EACE,WAAW;EACX,aAAa;AACf;;AAEA;EACE,iBAAiB;EACjB,eAAe;EACf,iBAAiB;EACjB,qBAAqB;EACrB,mBAAmB;EACnB,gBAAgB;EAChB,uBAAuB;EACvB,aAAa;AACf;;AAEA;EACE,eAAe;EACf,iBAAiB;EACjB,qBAAqB;EACrB,mBAAmB;EACnB,gBAAgB;EAChB,uBAAuB;AACzB;;AAEA;EACE,eAAe;EACf,iBAAiB;EACjB,qBAAqB;AACvB;;AAEA;EACE,kBAAkB;EAClB,QAAQ;EACR,WAAW;EACX,YAAY;EACZ,mBAAmB;EACnB,eAAe;AACjB;;AAEA;EACE,mBAAmB;AACrB","sourcesContent":[".modal-container {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 100vw;\n  height: 100vh;\n  position: fixed;\n  top: 0;\n  left: 0;\n}\n\n.modal-container.hide {\n  display: none;\n}\n\n.dimmer {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  background: rgba(0, 0, 0, 0.5);\n}\n\n.search-modal {\n  position: relative;\n  width: 1080px;\n  height: 727px;\n  background: #ffffff;\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 4px;\n  padding: 50px 30px 32px 30px;\n}\n\n.search-modal__title {\n  font-weight: bold;\n  font-size: 34px;\n  line-height: 36px;\n  text-align: center;\n  margin-bottom: 40px;\n}\n\n.search-input {\n  display: flex;\n  flex-direction: column;\n  width: fit-content;\n  margin: 0 auto;\n  margin-bottom: 45px;\n}\n\n#search-error-message {\n  color: rgb(160, 158, 158);\n  margin-top: 3px;\n  margin-left: 3px;\n  min-height: 22px;\n}\n\n.search-input__keyword {\n  width: 400px;\n  height: 36px;\n  margin-right: 20px;\n  padding: 4px 8px;\n  border: 1px solid #b4b4b4;\n  border-radius: 4px;\n}\n\n.search-input__keyword::placeholder {\n  color: #8b8b8b;\n  font-size: 16px;\n}\n\n.search-input__search-button {\n  width: 72px;\n  height: 36px;\n  background: #00bcd4;\n  color: #ffffff;\n}\n\n.search-result.search-result--no-result {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n\n.search-result.hidden {\n  display: none;\n}\n\n.no-result__image {\n  width: 190px;\n  height: 140px;\n  margin-bottom: 32px;\n}\n\n.no-result__description {\n  font-size: 16px;\n  line-height: 150%;\n  text-align: center;\n  letter-spacing: 0.5px;\n}\n\n.video-list {\n  width: 1040px;\n  height: 493px;\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  gap: 32px 16px;\n  overflow-y: auto;\n}\n\n.video-list::-webkit-scrollbar {\n  width: 7px;\n}\n.video-list::-webkit-scrollbar-thumb {\n  border-radius: 10px;\n  background-color: #00bcd4;\n}\n.video-list::-webkit-scrollbar-track {\n  background-color: transparent;\n}\n\n.video-item {\n  position: relative;\n  width: 240px;\n  height: 255px;\n}\n\n.video-item__thumbnail {\n  width: 100%;\n  height: 135px;\n}\n\n.video-item__title {\n  font-weight: bold;\n  font-size: 16px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  margin: 4px 0;\n}\n\n.video-item__channel-name {\n  font-size: 16px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n\n.video-item__published-date {\n  font-size: 12px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n}\n\n.video-item__save-button {\n  position: absolute;\n  right: 0;\n  width: 80px;\n  height: 36px;\n  background: #f9f9f9;\n  margin-top: 4px;\n}\n\n.video-item__save-button:hover {\n  background: #efefef;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1933,6 +2080,52 @@ function _asyncToGenerator(fn) {
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime/helpers/esm/classApplyDescriptorGet.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/classApplyDescriptorGet.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _classApplyDescriptorGet)
+/* harmony export */ });
+function _classApplyDescriptorGet(receiver, descriptor) {
+  if (descriptor.get) {
+    return descriptor.get.call(receiver);
+  }
+
+  return descriptor.value;
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/classApplyDescriptorSet.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/classApplyDescriptorSet.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _classApplyDescriptorSet)
+/* harmony export */ });
+function _classApplyDescriptorSet(receiver, descriptor, value) {
+  if (descriptor.set) {
+    descriptor.set.call(receiver, value);
+  } else {
+    if (!descriptor.writable) {
+      throw new TypeError("attempted to set read only private field");
+    }
+
+    descriptor.value = value;
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js":
 /*!*******************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js ***!
@@ -1948,6 +2141,72 @@ function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
   }
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/classExtractFieldDescriptor.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/classExtractFieldDescriptor.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _classExtractFieldDescriptor)
+/* harmony export */ });
+function _classExtractFieldDescriptor(receiver, privateMap, action) {
+  if (!privateMap.has(receiver)) {
+    throw new TypeError("attempted to " + action + " private field on non-instance");
+  }
+
+  return privateMap.get(receiver);
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/classPrivateFieldGet.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/classPrivateFieldGet.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _classPrivateFieldGet)
+/* harmony export */ });
+/* harmony import */ var _classApplyDescriptorGet_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./classApplyDescriptorGet.js */ "./node_modules/@babel/runtime/helpers/esm/classApplyDescriptorGet.js");
+/* harmony import */ var _classExtractFieldDescriptor_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./classExtractFieldDescriptor.js */ "./node_modules/@babel/runtime/helpers/esm/classExtractFieldDescriptor.js");
+
+
+function _classPrivateFieldGet(receiver, privateMap) {
+  var descriptor = (0,_classExtractFieldDescriptor_js__WEBPACK_IMPORTED_MODULE_1__["default"])(receiver, privateMap, "get");
+  return (0,_classApplyDescriptorGet_js__WEBPACK_IMPORTED_MODULE_0__["default"])(receiver, descriptor);
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/classPrivateFieldSet.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/classPrivateFieldSet.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _classPrivateFieldSet)
+/* harmony export */ });
+/* harmony import */ var _classApplyDescriptorSet_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./classApplyDescriptorSet.js */ "./node_modules/@babel/runtime/helpers/esm/classApplyDescriptorSet.js");
+/* harmony import */ var _classExtractFieldDescriptor_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./classExtractFieldDescriptor.js */ "./node_modules/@babel/runtime/helpers/esm/classExtractFieldDescriptor.js");
+
+
+function _classPrivateFieldSet(receiver, privateMap, value) {
+  var descriptor = (0,_classExtractFieldDescriptor_js__WEBPACK_IMPORTED_MODULE_1__["default"])(receiver, privateMap, "set");
+  (0,_classApplyDescriptorSet_js__WEBPACK_IMPORTED_MODULE_0__["default"])(receiver, descriptor, value);
+  return value;
 }
 
 /***/ }),
