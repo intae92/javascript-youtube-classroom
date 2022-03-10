@@ -126,16 +126,22 @@ var VideoCard = /*#__PURE__*/function () {
       var _this$props = this.props,
           item = _this$props.item,
           videoIds = _this$props.videoIds;
-      var videoId = item.id.videoId,
-          _item$snippet = item.snippet,
-          url = _item$snippet.thumbnails.medium.url,
-          publishTime = _item$snippet.publishTime,
-          channelTitle = _item$snippet.channelTitle,
-          title = _item$snippet.title;
-      var storeButton = videoIds.includes(videoId) ? '' : '<button class="video-item__save-button button">⬇ 저장</button>';
-      var date = new Date(publishTime);
-      var dateText = "".concat(date.getFullYear(), "\uB144 ").concat(date.getMonth() + 1, "\uC6D4 ").concat(date.getDate(), "\uC77C");
-      return "\n      <li class=\"video-item\" data-video-id=\"".concat(videoId, "\">\n        <img\n          src=\"").concat(url, "\"\n          alt=\"video-item-thumbnail\" class=\"video-item__thumbnail\">\n        <h4 class=\"video-item__title\">").concat(title, "</h4>\n        <p class=\"video-item__channel-name\">").concat(channelTitle, "</p>\n        <p class=\"video-item__published-date\">").concat(dateText, "</p>\n        ").concat(storeButton, "\n      </li>\n      ");
+
+      try {
+        var videoId = item.id.videoId,
+            _item$snippet = item.snippet,
+            url = _item$snippet.thumbnails.medium.url,
+            publishTime = _item$snippet.publishTime,
+            channelTitle = _item$snippet.channelTitle,
+            title = _item$snippet.title;
+        var storeButton = videoIds.includes(videoId) ? '' : '<button class="video-item__save-button button">⬇ 저장</button>';
+        var date = new Date(publishTime);
+        var dateText = "".concat(date.getFullYear(), "\uB144 ").concat(date.getMonth() + 1, "\uC6D4 ").concat(date.getDate(), "\uC77C");
+        return "\n      <li class=\"video-item\" data-video-id=\"".concat(videoId, "\">\n        <img\n          src=\"").concat(url, "\"\n          alt=\"video-item-thumbnail\" class=\"video-item__thumbnail\">\n        <h4 class=\"video-item__title\">").concat(title, "</h4>\n        <p class=\"video-item__channel-name\">").concat(channelTitle, "</p>\n        <p class=\"video-item__published-date\">").concat(dateText, "</p>\n        ").concat(storeButton, "\n      </li>\n      ");
+      } catch (err) {
+        console.log('err', err);
+        return '';
+      }
     }
   }]);
 
