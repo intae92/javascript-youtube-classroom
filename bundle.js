@@ -21,7 +21,6 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "KEY": () => (/* binding */ KEY),
 /* harmony export */   "OPTIONS": () => (/* binding */ OPTIONS),
 /* harmony export */   "fetchData": () => (/* binding */ fetchData)
 /* harmony export */ });
@@ -36,10 +35,10 @@ __webpack_require__.r(__webpack_exports__);
 
 var OPTIONS = {
   part: 'snippet',
-  maxResults: _constants__WEBPACK_IMPORTED_MODULE_3__.RULES.MAX_VIDEOS,
-  order: 'date'
+  maxResults: _constants__WEBPACK_IMPORTED_MODULE_3__.RULES.MAX_VIDEO_AMOUNT_PER_REQUEST,
+  order: 'date',
+  type: 'video'
 };
-var KEY = 'VIDEO_IDS';
 
 var stringQuery = function stringQuery(props) {
   var url = props.url,
@@ -134,8 +133,9 @@ var VideoCard = /*#__PURE__*/function () {
           channelTitle = _item$snippet.channelTitle,
           title = _item$snippet.title;
       var storeButton = videoIds.includes(videoId) ? '' : '<button class="video-item__save-button button">⬇ 저장</button>';
-      var timeFormatter = publishTime.split('T')[0];
-      return "\n      <li class=\"video-item\" data-video-id=\"".concat(videoId, "\">\n        <img\n          src=\"").concat(url, "\"\n          alt=\"video-item-thumbnail\" class=\"video-item__thumbnail\">\n        <h4 class=\"video-item__title\">").concat(title, "</h4>\n        <p class=\"video-item__channel-name\">").concat(channelTitle, "</p>\n        <p class=\"video-item__published-date\">").concat(timeFormatter, "</p>\n        ").concat(storeButton, "\n      </li>\n      ");
+      var date = new Date(publishTime);
+      var dateText = "".concat(date.getFullYear(), "\uB144 ").concat(date.getMonth() + 1, "\uC6D4 ").concat(date.getDate(), "\uC77C");
+      return "\n      <li class=\"video-item\" data-video-id=\"".concat(videoId, "\">\n        <img\n          src=\"").concat(url, "\"\n          alt=\"video-item-thumbnail\" class=\"video-item__thumbnail\">\n        <h4 class=\"video-item__title\">").concat(title, "</h4>\n        <p class=\"video-item__channel-name\">").concat(channelTitle, "</p>\n        <p class=\"video-item__published-date\">").concat(dateText, "</p>\n        ").concat(storeButton, "\n      </li>\n      ");
     }
   }]);
 
@@ -162,10 +162,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
 /* harmony import */ var _babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/classPrivateFieldGet */ "./node_modules/@babel/runtime/helpers/esm/classPrivateFieldGet.js");
 /* harmony import */ var _babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/classPrivateFieldSet */ "./node_modules/@babel/runtime/helpers/esm/classPrivateFieldSet.js");
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../api */ "./src/js/api.js");
+/* harmony import */ var _utils_localStorage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/localStorage */ "./src/js/utils/localStorage.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../constants */ "./src/js/constants.js");
-/* harmony import */ var _utils_localStorage__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/localStorage */ "./src/js/utils/localStorage.js");
-/* harmony import */ var _VideoCard__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./VideoCard */ "./src/js/common/VideoCard.js");
+/* harmony import */ var _VideoCard__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./VideoCard */ "./src/js/common/VideoCard.js");
 
 
 
@@ -179,7 +178,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
 
 function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
-
 
 
 
@@ -213,14 +211,14 @@ var VideoCardContainer = /*#__PURE__*/function () {
     value: function storeIDHandler(e) {
       if (e.target.className.includes('video-item__save-button')) {
         var videoID = e.target.closest('li').dataset.videoId;
-        var videoIDs = (0,_utils_localStorage__WEBPACK_IMPORTED_MODULE_7__.getStorageVideoIDs)(_api__WEBPACK_IMPORTED_MODULE_5__.KEY);
+        var videoIDs = (0,_utils_localStorage__WEBPACK_IMPORTED_MODULE_5__.getStorageVideoIDs)(_utils_localStorage__WEBPACK_IMPORTED_MODULE_5__.LOCALSTORAGE_KEY);
 
         if (videoIDs.length >= _constants__WEBPACK_IMPORTED_MODULE_6__.RULES.MAX_STORED_IDS_AMOUNT) {
           return;
         }
 
-        (0,_utils_localStorage__WEBPACK_IMPORTED_MODULE_7__.setStorageVideoIDs)({
-          key: _api__WEBPACK_IMPORTED_MODULE_5__.KEY,
+        (0,_utils_localStorage__WEBPACK_IMPORTED_MODULE_5__.setStorageVideoIDs)({
+          key: _utils_localStorage__WEBPACK_IMPORTED_MODULE_5__.LOCALSTORAGE_KEY,
           value: videoIDs.concat(videoID)
         });
         e.target.remove();
@@ -232,9 +230,9 @@ var VideoCardContainer = /*#__PURE__*/function () {
       var _classPrivateFieldGet2,
           _this = this;
 
-      var videoIds = (0,_utils_localStorage__WEBPACK_IMPORTED_MODULE_7__.getStorageVideoIDs)(_api__WEBPACK_IMPORTED_MODULE_5__.KEY);
+      var videoIds = (0,_utils_localStorage__WEBPACK_IMPORTED_MODULE_5__.getStorageVideoIDs)(_utils_localStorage__WEBPACK_IMPORTED_MODULE_5__.LOCALSTORAGE_KEY);
       return (_classPrivateFieldGet2 = (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _state).items) === null || _classPrivateFieldGet2 === void 0 ? void 0 : _classPrivateFieldGet2.map(function (item) {
-        return new _VideoCard__WEBPACK_IMPORTED_MODULE_8__["default"](_this.parentElement, {
+        return new _VideoCard__WEBPACK_IMPORTED_MODULE_7__["default"](_this.parentElement, {
           item: item,
           videoIds: videoIds
         }).template();
@@ -274,7 +272,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "THROTTLE_PENDING_MILLISECOND": () => (/* binding */ THROTTLE_PENDING_MILLISECOND)
 /* harmony export */ });
 var RULES = {
-  MAX_VIDEOS: 10,
+  MAX_VIDEO_AMOUNT_PER_REQUEST: 10,
   MAX_STORED_IDS_AMOUNT: 100
 };
 var THROTTLE_PENDING_MILLISECOND = 500;
@@ -353,6 +351,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../api */ "./src/js/api.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../constants */ "./src/js/constants.js");
 /* harmony import */ var _common_VideosCardContainer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../common/VideosCardContainer */ "./src/js/common/VideosCardContainer.js");
+/* harmony import */ var _utils_throttle__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/throttle */ "./src/js/utils/throttle.js");
 
 
 
@@ -362,6 +361,7 @@ __webpack_require__.r(__webpack_exports__);
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
 
 
 
@@ -418,7 +418,7 @@ var SearchModal = /*#__PURE__*/function () {
     value: function bindEvents() {
       this.dimmer.addEventListener('click', this.closeModalHandler.bind(this));
       this.searchForm.addEventListener('submit', this.searchHandler.bind(this));
-      this.videoList.addEventListener('scroll', this.scrollHandler.bind(this));
+      this.videoList.addEventListener('scroll', (0,_utils_throttle__WEBPACK_IMPORTED_MODULE_9__.throttle)(this.scrollHandler.bind(this), _constants__WEBPACK_IMPORTED_MODULE_7__.THROTTLE_PENDING_MILLISECOND));
     }
   }, {
     key: "closeModalHandler",
@@ -428,28 +428,19 @@ var SearchModal = /*#__PURE__*/function () {
   }, {
     key: "scrollHandler",
     value: function scrollHandler(e) {
-      var _this = this;
+      var _e$target = e.target,
+          scrollTop = _e$target.scrollTop,
+          offsetHeight = _e$target.offsetHeight,
+          scrollHeight = _e$target.scrollHeight;
+      var isNextScroll = scrollTop + offsetHeight >= scrollHeight;
 
-      var throttle;
-
-      if (!throttle) {
-        var _e$target = e.target,
-            scrollTop = _e$target.scrollTop,
-            offsetHeight = _e$target.offsetHeight,
-            scrollHeight = _e$target.scrollHeight;
-        var isNextScroll = scrollTop + offsetHeight >= scrollHeight;
-        throttle = setTimeout(function () {
-          throttle = null;
-
-          if (isNextScroll) {
-            _this.renderVideoList({
-              url: "https://622752939a5410d43ba3fbcd--modest-euler-778376.netlify.app/dummy/youtube/v3/search?",
-              keyword: _this.searchInputKeyword.value,
-              options: _api__WEBPACK_IMPORTED_MODULE_6__.OPTIONS,
-              pageToken: _this.pageToken
-            });
-          }
-        }, _constants__WEBPACK_IMPORTED_MODULE_7__.THROTTLE_PENDING_MILLISECOND);
+      if (isNextScroll) {
+        this.renderVideoList({
+          url: "https://competent-haibt-c82cf4.netlify.app/youtube/v3/search?",
+          keyword: this.searchInputKeyword.value,
+          options: _api__WEBPACK_IMPORTED_MODULE_6__.OPTIONS,
+          pageToken: this.pageToken
+        });
       }
     }
   }, {
@@ -470,7 +461,7 @@ var SearchModal = /*#__PURE__*/function () {
                   this.videoList.replaceChildren();
                   this.pageToken = '';
                   this.renderVideoList({
-                    url: "https://622752939a5410d43ba3fbcd--modest-euler-778376.netlify.app/dummy/youtube/v3/search?",
+                    url: "https://competent-haibt-c82cf4.netlify.app/youtube/v3/search?",
                     keyword: this.searchInputKeyword.value,
                     options: _api__WEBPACK_IMPORTED_MODULE_6__.OPTIONS,
                     pageToken: this.pageToken
@@ -497,7 +488,7 @@ var SearchModal = /*#__PURE__*/function () {
   }, {
     key: "renderSkeletonUI",
     value: function renderSkeletonUI(element) {
-      element.insertAdjacentHTML('beforeend', SKELETON_TEMPLATE.repeat(_constants__WEBPACK_IMPORTED_MODULE_7__.RULES.MAX_VIDEOS));
+      element.insertAdjacentHTML('beforeend', SKELETON_TEMPLATE.repeat(_constants__WEBPACK_IMPORTED_MODULE_7__.RULES.MAX_VIDEO_AMOUNT_PER_REQUEST));
     }
   }, {
     key: "removeSkeletonUI",
@@ -582,6 +573,7 @@ var SearchModal = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "LOCALSTORAGE_KEY": () => (/* binding */ LOCALSTORAGE_KEY),
 /* harmony export */   "getStorageVideoIDs": () => (/* binding */ getStorageVideoIDs),
 /* harmony export */   "setStorageVideoIDs": () => (/* binding */ setStorageVideoIDs)
 /* harmony export */ });
@@ -595,7 +587,39 @@ var setStorageVideoIDs = function setStorageVideoIDs(_ref) {
   window.localStorage.setItem(key, JSON.stringify(value));
 };
 
+var LOCALSTORAGE_KEY = 'VIDEO_IDS';
 
+
+/***/ }),
+
+/***/ "./src/js/utils/throttle.js":
+/*!**********************************!*\
+  !*** ./src/js/utils/throttle.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "throttle": () => (/* binding */ throttle)
+/* harmony export */ });
+var _this = undefined;
+
+var throttle = function throttle(fn, delay) {
+  var timer;
+  return function () {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    if (!timer) {
+      timer = setTimeout(function () {
+        timer = null;
+        fn.apply(_this, args);
+      }, delay);
+    }
+  };
+};
 
 /***/ }),
 
