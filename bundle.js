@@ -265,6 +265,33 @@ var VideoCardContainer = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./src/js/common/toast.js":
+/*!********************************!*\
+  !*** ./src/js/common/toast.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var removeToast;
+
+var toast = function toast(string) {
+  var toast = document.getElementById('toast');
+  toast.classList.contains('reveal') ? (clearTimeout(removeToast), removeToast = setTimeout(function () {
+    document.getElementById('toast').classList.remove('reveal');
+  }, 1500)) : removeToast = setTimeout(function () {
+    document.getElementById('toast').classList.remove('reveal');
+  }, 1500);
+  toast.classList.add('reveal'), toast.textContent = string;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (toast);
+
+/***/ }),
+
 /***/ "./src/js/constants.js":
 /*!*****************************!*\
   !*** ./src/js/constants.js ***!
@@ -274,12 +301,17 @@ var VideoCardContainer = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ERROR_MESSAGE": () => (/* binding */ ERROR_MESSAGE),
 /* harmony export */   "RULES": () => (/* binding */ RULES),
 /* harmony export */   "THROTTLE_PENDING_MILLISECOND": () => (/* binding */ THROTTLE_PENDING_MILLISECOND)
 /* harmony export */ });
 var RULES = {
   MAX_VIDEO_AMOUNT_PER_REQUEST: 10,
   MAX_STORED_IDS_AMOUNT: 100
+};
+var ERROR_MESSAGE = {
+  API_CALLS_QUOTA_EXCEEDED: 'api 할당량 초과로 dummy 데이터를 사용합니다.\n매일 오후 5시에 api 할당량이 초기화 됩니다.',
+  EMPTY_KEYWORD: '검색어를 입력해 주세요.'
 };
 var THROTTLE_PENDING_MILLISECOND = 500;
 
@@ -358,6 +390,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../constants */ "./src/js/constants.js");
 /* harmony import */ var _common_VideosCardContainer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../common/VideosCardContainer */ "./src/js/common/VideosCardContainer.js");
 /* harmony import */ var _utils_throttle__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/throttle */ "./src/js/utils/throttle.js");
+/* harmony import */ var _common_toast__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../common/toast */ "./src/js/common/toast.js");
 
 
 
@@ -374,13 +407,14 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 
+
 var isEmptyKeyword = function isEmptyKeyword(keyword) {
   return keyword.trim().length === 0;
 };
 
 var validateKeyword = function validateKeyword(keyword) {
   if (isEmptyKeyword(keyword)) {
-    throw new Error('검색어를 입력해 주세요.');
+    throw new Error(_constants__WEBPACK_IMPORTED_MODULE_7__.ERROR_MESSAGE.EMPTY_KEYWORD);
   }
 };
 
@@ -542,7 +576,7 @@ var SearchModal = /*#__PURE__*/function () {
                 videoList = _context2.sent;
 
                 if (!videoList.error) {
-                  _context2.next = 8;
+                  _context2.next = 9;
                   break;
                 }
 
@@ -553,8 +587,9 @@ var SearchModal = /*#__PURE__*/function () {
 
               case 7:
                 videoList = _context2.sent;
+                (0,_common_toast__WEBPACK_IMPORTED_MODULE_10__["default"])(_constants__WEBPACK_IMPORTED_MODULE_7__.ERROR_MESSAGE.API_CALLS_QUOTA_EXCEEDED);
 
-              case 8:
+              case 9:
                 this.VideoCardContainer.setState({
                   items: videoList.items
                 });
@@ -562,7 +597,7 @@ var SearchModal = /*#__PURE__*/function () {
                 this.removeSkeletonUI(this.videoList);
                 this.pageToken = videoList.nextPageToken || '';
 
-              case 12:
+              case 13:
               case "end":
                 return _context2.stop();
             }
@@ -689,7 +724,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_app_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./app.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/app.css");
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_modal_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./modal.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/modal.css");
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_skeleton_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./skeleton.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/skeleton.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_toast_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./toast.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/toast.css");
 // Imports
+
 
 
 
@@ -699,8 +736,9 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_app_css__WEBPACK_IMPORTED_MODULE_2__["default"]);
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_modal_css__WEBPACK_IMPORTED_MODULE_3__["default"]);
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_skeleton_css__WEBPACK_IMPORTED_MODULE_4__["default"]);
+___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_toast_css__WEBPACK_IMPORTED_MODULE_5__["default"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\nol,\nul {\n  list-style: none;\n}\n\nhtml,\nbody {\n  height: 100%;\n  -webkit-font-smoothing: antialiased;\n}\n\ninput,\nbutton,\ntextarea,\nselect {\n  font: inherit;\n}\n", "",{"version":3,"sources":["webpack://./src/css/index.css"],"names":[],"mappings":"AAIA;EACE,SAAS;EACT,UAAU;EACV,sBAAsB;AACxB;;AAEA;;EAEE,gBAAgB;AAClB;;AAEA;;EAEE,YAAY;EACZ,mCAAmC;AACrC;;AAEA;;;;EAIE,aAAa;AACf","sourcesContent":["@import './app.css';\n@import './modal.css';\n@import './skeleton.css';\n\n* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\nol,\nul {\n  list-style: none;\n}\n\nhtml,\nbody {\n  height: 100%;\n  -webkit-font-smoothing: antialiased;\n}\n\ninput,\nbutton,\ntextarea,\nselect {\n  font: inherit;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\nol,\nul {\n  list-style: none;\n}\n\nhtml,\nbody {\n  height: 100%;\n  -webkit-font-smoothing: antialiased;\n}\n\ninput,\nbutton,\ntextarea,\nselect {\n  font: inherit;\n}\n", "",{"version":3,"sources":["webpack://./src/css/index.css"],"names":[],"mappings":"AAKA;EACE,SAAS;EACT,UAAU;EACV,sBAAsB;AACxB;;AAEA;;EAEE,gBAAgB;AAClB;;AAEA;;EAEE,YAAY;EACZ,mCAAmC;AACrC;;AAEA;;;;EAIE,aAAa;AACf","sourcesContent":["@import \"./app.css\";\n@import \"./modal.css\";\n@import \"./skeleton.css\";\n@import \"./toast.css\";\n\n* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\nol,\nul {\n  list-style: none;\n}\n\nhtml,\nbody {\n  height: 100%;\n  -webkit-font-smoothing: antialiased;\n}\n\ninput,\nbutton,\ntextarea,\nselect {\n  font: inherit;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -755,6 +793,33 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, ".skeleton {\n  width: 236px;\n}\n\n.skeleton .image,\n.skeleton .line {\n  background-image: linear-gradient(\n    90deg,\n    #e0e0e0 0px,\n    #ededed 30px,\n    #e0e0e0 60px\n  );\n  animation: refresh 2s infinite ease-out;\n}\n\n.skeleton .image {\n  height: 150px;\n  margin-bottom: 15px;\n}\n\n.skeleton .line {\n  height: 16px;\n  margin-bottom: 15px;\n}\n\n.skeleton .line:first-child {\n  width: 50%;\n}\n\n.skeleton .line:last-child {\n  width: 80%;\n}\n\n@keyframes refresh {\n  0% {\n    background-position: calc(-100px);\n  }\n  40%,\n  100% {\n    background-position: 320px;\n  }\n}\n", "",{"version":3,"sources":["webpack://./src/css/skeleton.css"],"names":[],"mappings":"AAAA;EACE,YAAY;AACd;;AAEA;;EAEE;;;;;GAKC;EACD,uCAAuC;AACzC;;AAEA;EACE,aAAa;EACb,mBAAmB;AACrB;;AAEA;EACE,YAAY;EACZ,mBAAmB;AACrB;;AAEA;EACE,UAAU;AACZ;;AAEA;EACE,UAAU;AACZ;;AAEA;EACE;IACE,iCAAiC;EACnC;EACA;;IAEE,0BAA0B;EAC5B;AACF","sourcesContent":[".skeleton {\n  width: 236px;\n}\n\n.skeleton .image,\n.skeleton .line {\n  background-image: linear-gradient(\n    90deg,\n    #e0e0e0 0px,\n    #ededed 30px,\n    #e0e0e0 60px\n  );\n  animation: refresh 2s infinite ease-out;\n}\n\n.skeleton .image {\n  height: 150px;\n  margin-bottom: 15px;\n}\n\n.skeleton .line {\n  height: 16px;\n  margin-bottom: 15px;\n}\n\n.skeleton .line:first-child {\n  width: 50%;\n}\n\n.skeleton .line:last-child {\n  width: 80%;\n}\n\n@keyframes refresh {\n  0% {\n    background-position: calc(-100px);\n  }\n  40%,\n  100% {\n    background-position: 320px;\n  }\n}\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/css/toast.css":
+/*!*****************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/css/toast.css ***!
+  \*****************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "#toast {\n  position: fixed;\n  bottom: 30px;\n  left: 50%;\n  padding: 15px 20px;\n  transform: translate(-50%, 10px);\n  border-radius: 30px;\n  overflow: hidden;\n  font-size: 0.8rem;\n  font-weight: bold;\n  opacity: 0;\n  visibility: hidden;\n  transition: opacity 0.5s, visibility 0.5s, transform 0.5s;\n  background: rgba(0, 188, 212);\n  color: #fff;\n  z-index: 10000;\n  text-align: center;\n  white-space: pre;\n}\n\n#toast.reveal {\n  opacity: 1;\n  visibility: visible;\n  transform: translate(-50%, 0);\n}\n", "",{"version":3,"sources":["webpack://./src/css/toast.css"],"names":[],"mappings":"AAAA;EACE,eAAe;EACf,YAAY;EACZ,SAAS;EACT,kBAAkB;EAClB,gCAAgC;EAChC,mBAAmB;EACnB,gBAAgB;EAChB,iBAAiB;EACjB,iBAAiB;EACjB,UAAU;EACV,kBAAkB;EAClB,yDAAyD;EACzD,6BAA6B;EAC7B,WAAW;EACX,cAAc;EACd,kBAAkB;EAClB,gBAAgB;AAClB;;AAEA;EACE,UAAU;EACV,mBAAmB;EACnB,6BAA6B;AAC/B","sourcesContent":["#toast {\n  position: fixed;\n  bottom: 30px;\n  left: 50%;\n  padding: 15px 20px;\n  transform: translate(-50%, 10px);\n  border-radius: 30px;\n  overflow: hidden;\n  font-size: 0.8rem;\n  font-weight: bold;\n  opacity: 0;\n  visibility: hidden;\n  transition: opacity 0.5s, visibility 0.5s, transform 0.5s;\n  background: rgba(0, 188, 212);\n  color: #fff;\n  z-index: 10000;\n  text-align: center;\n  white-space: pre;\n}\n\n#toast.reveal {\n  opacity: 1;\n  visibility: visible;\n  transform: translate(-50%, 0);\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
