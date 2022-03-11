@@ -540,6 +540,21 @@ var SearchModal = /*#__PURE__*/function () {
 
               case 3:
                 videoList = _context2.sent;
+
+                if (!videoList.error) {
+                  _context2.next = 8;
+                  break;
+                }
+
+                _context2.next = 7;
+                return (0,_api__WEBPACK_IMPORTED_MODULE_6__.fetchData)(_objectSpread(_objectSpread({}, options), {}, {
+                  url: "https://competent-haibt-c82cf4.netlify.app/dummy/youtube/v3/search?"
+                }));
+
+              case 7:
+                videoList = _context2.sent;
+
+              case 8:
                 this.VideoCardContainer.setState({
                   items: videoList.items
                 });
@@ -547,7 +562,7 @@ var SearchModal = /*#__PURE__*/function () {
                 this.removeSkeletonUI(this.videoList);
                 this.pageToken = videoList.nextPageToken || '';
 
-              case 8:
+              case 12:
               case "end":
                 return _context2.stop();
             }
