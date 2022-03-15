@@ -194,8 +194,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/classPrivateFieldGet */ "./node_modules/@babel/runtime/helpers/esm/classPrivateFieldGet.js");
 /* harmony import */ var _babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/classPrivateFieldSet */ "./node_modules/@babel/runtime/helpers/esm/classPrivateFieldSet.js");
 /* harmony import */ var _utils_localStorage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/localStorage */ "./src/js/utils/localStorage.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../constants */ "./src/js/constants.js");
-/* harmony import */ var _VideoCard__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./VideoCard */ "./src/js/common/VideoCard.js");
+/* harmony import */ var _VideoCard__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./VideoCard */ "./src/js/common/VideoCard.js");
+/* harmony import */ var _toast__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./toast */ "./src/js/common/toast.js");
 
 
 
@@ -213,6 +213,7 @@ function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollect
 
 
 
+var toastPopup = (0,_toast__WEBPACK_IMPORTED_MODULE_7__["default"])();
 
 var _state = /*#__PURE__*/new WeakMap();
 
@@ -242,19 +243,19 @@ var VideoCardContainer = /*#__PURE__*/function () {
   }, {
     key: "storeIDHandler",
     value: function storeIDHandler(e) {
-      if (e.target.className.includes('video-item__save-button')) {
-        var videoID = e.target.closest('li').dataset.videoId;
-        var videoIDs = (0,_utils_localStorage__WEBPACK_IMPORTED_MODULE_5__.getStorageVideoIDs)(_utils_localStorage__WEBPACK_IMPORTED_MODULE_5__.LOCALSTORAGE_KEY);
-
-        if (videoIDs.length >= _constants__WEBPACK_IMPORTED_MODULE_6__.RULES.MAX_STORED_IDS_AMOUNT) {
-          return;
+      try {
+        if (e.target.className.includes('video-item__save-button')) {
+          var videoID = e.target.closest('li').dataset.videoId;
+          var videoIDs = (0,_utils_localStorage__WEBPACK_IMPORTED_MODULE_5__.getStorageVideoIDs)(_utils_localStorage__WEBPACK_IMPORTED_MODULE_5__.LOCALSTORAGE_KEY);
+          (0,_utils_localStorage__WEBPACK_IMPORTED_MODULE_5__.checkVideoStorageFull)(_utils_localStorage__WEBPACK_IMPORTED_MODULE_5__.LOCALSTORAGE_KEY);
+          (0,_utils_localStorage__WEBPACK_IMPORTED_MODULE_5__.setStorageVideoIDs)({
+            key: _utils_localStorage__WEBPACK_IMPORTED_MODULE_5__.LOCALSTORAGE_KEY,
+            value: videoIDs.concat(videoID)
+          });
+          e.target.remove();
         }
-
-        (0,_utils_localStorage__WEBPACK_IMPORTED_MODULE_5__.setStorageVideoIDs)({
-          key: _utils_localStorage__WEBPACK_IMPORTED_MODULE_5__.LOCALSTORAGE_KEY,
-          value: videoIDs.concat(videoID)
-        });
-        e.target.remove();
+      } catch (err) {
+        toastPopup(err.message);
       }
     }
   }, {
@@ -265,7 +266,7 @@ var VideoCardContainer = /*#__PURE__*/function () {
 
       var videoIds = (0,_utils_localStorage__WEBPACK_IMPORTED_MODULE_5__.getStorageVideoIDs)(_utils_localStorage__WEBPACK_IMPORTED_MODULE_5__.LOCALSTORAGE_KEY);
       return (_classPrivateFieldGet2 = (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _state).items) === null || _classPrivateFieldGet2 === void 0 ? void 0 : _classPrivateFieldGet2.map(function (item) {
-        return new _VideoCard__WEBPACK_IMPORTED_MODULE_7__["default"](_this.parentElement, {
+        return new _VideoCard__WEBPACK_IMPORTED_MODULE_6__["default"](_this.parentElement, {
           item: item,
           videoIds: videoIds
         }).template();
@@ -357,7 +358,8 @@ var RULES = {
 };
 var ERROR_MESSAGE = {
   API_CALLS_QUOTA_EXCEEDED: 'api 할당량 초과입니다.\n매일 오후 5시에 api 할당량이 초기화 됩니다.',
-  EMPTY_KEYWORD: '검색어를 입력해 주세요.'
+  EMPTY_KEYWORD: '검색어를 입력해 주세요.',
+  FULL_STORAGE: '저장공간이 가득 찼습니다.\n최대 100개까지 저장 가능합니다.'
 };
 var THROTTLE_PENDING_MILLISECOND = 500;
 
@@ -667,9 +669,14 @@ var SearchModal = /*#__PURE__*/function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "LOCALSTORAGE_KEY": () => (/* binding */ LOCALSTORAGE_KEY),
+/* harmony export */   "checkVideoStorageFull": () => (/* binding */ checkVideoStorageFull),
 /* harmony export */   "getStorageVideoIDs": () => (/* binding */ getStorageVideoIDs),
 /* harmony export */   "setStorageVideoIDs": () => (/* binding */ setStorageVideoIDs)
 /* harmony export */ });
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./src/js/constants.js");
+
+var LOCALSTORAGE_KEY = 'VIDEO_IDS';
+
 var getStorageVideoIDs = function getStorageVideoIDs(key) {
   return JSON.parse(window.localStorage.getItem(key)) || [];
 };
@@ -680,7 +687,12 @@ var setStorageVideoIDs = function setStorageVideoIDs(_ref) {
   window.localStorage.setItem(key, JSON.stringify(value));
 };
 
-var LOCALSTORAGE_KEY = 'VIDEO_IDS';
+var checkVideoStorageFull = function checkVideoStorageFull(key) {
+  if (getStorageVideoIDs(key).length >= _constants__WEBPACK_IMPORTED_MODULE_0__.RULES.MAX_STORED_IDS_AMOUNT) {
+    throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.FULL_STORAGE);
+  }
+};
+
 
 
 /***/ }),
