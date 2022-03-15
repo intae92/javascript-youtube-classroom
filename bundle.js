@@ -36,16 +36,17 @@ __webpack_require__.r(__webpack_exports__);
 
 var HOME_URL = "https://competent-haibt-c82cf4.netlify.app/youtube/v3/search?";
 var TEST_URL = "https://competent-haibt-c82cf4.netlify.app/dummy/youtube/v3/search?";
+var BASE_URL = 'https://www.googleapis.com/youtube/v3/search?';
 var OPTIONS = {
   part: 'snippet',
   maxResults: _constants__WEBPACK_IMPORTED_MODULE_3__.RULES.MAX_VIDEO_AMOUNT_PER_REQUEST,
-  order: 'relevance',
-  type: 'video'
+  type: 'video',
+  key: 'AIzaSyAQD6Xy3mRw72FwG6m38yP2b8fvLK4BoB8'
 };
 
 var stringQuery = function stringQuery(props) {
   var _props$url = props.url,
-      url = _props$url === void 0 ? HOME_URL : _props$url,
+      url = _props$url === void 0 ? BASE_URL : _props$url,
       keyword = props.keyword,
       pageToken = props.pageToken,
       _props$options = props.options,
@@ -511,8 +512,9 @@ var SearchModal = /*#__PURE__*/function () {
           offsetHeight = _e$target.offsetHeight,
           scrollHeight = _e$target.scrollHeight;
       var isNextScroll = scrollTop + offsetHeight >= scrollHeight;
+      var isNotEndPage = this.pageToken !== null;
 
-      if (isNextScroll) {
+      if (isNextScroll && isNotEndPage) {
         this.renderVideoList({
           keyword: this.searchInputKeyword.value,
           pageToken: this.pageToken
@@ -539,12 +541,7 @@ var SearchModal = /*#__PURE__*/function () {
 
       try {
         (0,_utils_validator__WEBPACK_IMPORTED_MODULE_13__.validateKeyword)(this.searchInputKeyword.value);
-        var hasPrevVideoList = this.pageToken !== '';
-
-        if (hasPrevVideoList) {
-          this.reSearch();
-        }
-
+        this.reSearch();
         this.renderVideoList({
           keyword: this.searchInputKeyword.value,
           pageToken: this.pageToken
@@ -635,7 +632,7 @@ var SearchModal = /*#__PURE__*/function () {
                 });
                 this.showSearchResult(videoList.items);
                 this.hideSkeletons();
-                this.pageToken = videoList.nextPageToken || '';
+                this.pageToken = videoList.nextPageToken || null;
 
               case 15:
               case "end":
