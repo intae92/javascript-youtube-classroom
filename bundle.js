@@ -40,13 +40,12 @@ var BASE_URL = 'https://www.googleapis.com/youtube/v3/search?';
 var OPTIONS = {
   part: 'snippet',
   maxResults: _constants__WEBPACK_IMPORTED_MODULE_3__.RULES.MAX_VIDEO_AMOUNT_PER_REQUEST,
-  type: 'video' // key: 'AIzaSyAQD6Xy3mRw72FwG6m38yP2b8fvLK4BoB8'
-
+  type: 'video'
 };
 
 var stringQuery = function stringQuery(props) {
   var _props$url = props.url,
-      url = _props$url === void 0 ? TEST_URL : _props$url,
+      url = _props$url === void 0 ? HOME_URL : _props$url,
       keyword = props.keyword,
       pageToken = props.pageToken,
       _props$options = props.options,
