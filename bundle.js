@@ -45,7 +45,7 @@ var OPTIONS = {
 
 var stringQuery = function stringQuery(props) {
   var _props$url = props.url,
-      url = _props$url === void 0 ? TEST_URL : _props$url,
+      url = _props$url === void 0 ? HOME_URL : _props$url,
       keyword = props.keyword,
       pageToken = props.pageToken,
       _props$options = props.options,
